@@ -25,7 +25,7 @@ app.use((req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
         let token = req.headers.authorization.split(' ')[1];
         try {
-            console.log("WE HAVE", jwt.verify(token, config.application.signature));
+            res.locals.loggedInUser = jwt.verify(token, config.application.signature).fetchedUser;
         }
         catch (err) {
             // console.log(err);
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
             if (err == "TokenExpiredError: jwt expired") {
                 return res.status(400).send("Can You Please Login Again");
             }
-            
+
         }
         next();
     }

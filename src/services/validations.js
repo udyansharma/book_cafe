@@ -18,6 +18,7 @@ const signingUp = (input) => {
         throw "Sorry Your Password Must Be Of More Than 3 Characters."
     }
 };
+
 const signingIn = (input) => {
     if (JSON.stringify(input) === "{}") {
         throw "You Did Not Sent Any Data To Us";
@@ -30,7 +31,32 @@ const signingIn = (input) => {
     }
 };
 
+const publishingBook = (input) => {
+    if (JSON.stringify(input) === "{}") {
+        throw "You Did Not Sent Any Data To Us";
+    }
+    if (!input.title) {
+        throw "Book Title Missing";
+    }
+    if (!input.description) {
+        throw "A Little Description Of " + input.title + " Might Help The Buyer";
+    }
+    if (!input.price) {
+        throw "You Forgot To Mention The Price Of " + input.title;
+    }
+};
+
+const unPublishingBook = (input) => {
+    if (JSON.stringify(input) === "{}") {
+        throw "You Did Not Sent Any Data To Us";
+    }
+    if (!input.title) {
+        throw "Book Title Missing";
+    }
+};
 module.exports = {
     signingUp: signingUp,
-    signingIn: signingIn
+    signingIn: signingIn,
+    publishingBook: publishingBook,
+    unPublishingBook: unPublishingBook
 }
