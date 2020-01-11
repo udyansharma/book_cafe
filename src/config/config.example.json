@@ -1,0 +1,10 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": "",
+    "dbName":"book_cafe",
+    "user": "",
+    "password": "",
+    "connectionLimit":20
+  }
+}
