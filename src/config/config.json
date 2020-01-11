@@ -1,6 +1,6 @@
 {
   "db": {
-    "host": "localhost",
+    "host": "bookcafe_wookie_books_application_1",
     "port": "3306",
     "database": "book_cafe",
     "user": "root",

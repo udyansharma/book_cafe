@@ -1,0 +1,42 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: "2"
+
+networks: 
+  mynetwork:
+
+services:
+  redis:
+    image: redis
+    container_name: cache
+    networks:
+      - mynetwork
+    expose:
+      - 6379
+
+  mysql_container:
+    build:
+      context: .
+      dockerfile: Dockerfilemysql
+    networks:
+      - mynetwork
+    restart: always
+
+  wookie_books_application:
+    build:
+      context: .
+    networks:
+      - mynetwork
+    ports: 
+      - 8090:8090
+    depends_on:
+      - mysql_container
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
+    restart: always
+    
