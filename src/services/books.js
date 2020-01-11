@@ -26,4 +26,60 @@ const unPublishBook = async (author, bookDetails) => {
         });
     });
 }
-module.exports = { publishBook, unPublishBook }
+
+const getBooksByUser = async (user) => {
+    return new Promise((resolve, reject) => {
+        db.getBooksByAuthor(user).then((result) => {
+            console.log(result);
+            resolve(result);
+        }).catch((err) => {
+            console.log(err);
+            reject(err);
+        });
+    });
+}
+
+const getAllBooks = async () => {
+    return new Promise((resolve, reject) => {
+        db.getAllBooks().then((result) => {
+            console.log(result);
+            resolve(result);
+        }).catch((err) => {
+            console.log(err);
+            reject(err);
+        });
+    });
+}
+
+const getBooksByTitle = async (title) => {
+    return new Promise((resolve, reject) => {
+        db.getBooksByTitle(title).then((result) => {
+            console.log(result);
+            resolve(result);
+        }).catch((err) => {
+            console.log(err);
+            reject(err);
+        });
+    });
+}
+
+const getBooksById = async (title) => {
+    return new Promise((resolve, reject) => {
+        db.getBooksById(title).then((result) => {
+            console.log(result);
+            resolve(result);
+        }).catch((err) => {
+            console.log(err);
+            reject(err);
+        });
+    });
+}
+
+module.exports = {
+    publishBook,
+    unPublishBook,
+    getBooksByUser,
+    getAllBooks,
+    getBooksByTitle,
+    getBooksById
+}

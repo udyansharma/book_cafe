@@ -54,9 +54,29 @@ const unPublishingBook = (input) => {
         throw "Book Title Missing";
     }
 };
+
+const gettingBooksById = (input) => {
+    if (JSON.stringify(input) === "{}") {
+        throw "You Did Not Sent Any Data To Us";
+    }
+    if (!input.id) {
+        throw "Book Id Missing";
+    }
+};
+
+const gettingBooksByTitle = (input) => {
+    if (JSON.stringify(input) === "{}") {
+        throw "You Did Not Sent Any Data To Us";
+    }
+    if (!input.title) {
+        throw "Book Title Missing";
+    }
+};
 module.exports = {
     signingUp: signingUp,
     signingIn: signingIn,
     publishingBook: publishingBook,
-    unPublishingBook: unPublishingBook
+    unPublishingBook: unPublishingBook,
+    gettingBooksById,
+    gettingBooksByTitle
 }

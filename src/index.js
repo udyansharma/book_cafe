@@ -45,6 +45,9 @@ app.use((req, res, next) => {
 })
 app.use("/book", functionalAPIs);
 
+app.use((req, res, next) => {
+    res.status(404).send("You Took The Wrong Exit. No Such Endpoint");
+});
 app.listen(port, () => {
     console.log('Server started at port: ', port);
 });
