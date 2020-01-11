@@ -29,7 +29,7 @@
       "connectionLimit": 20
     },
     "redis":{
-      "redisUrl":"redis"
+      "redisUrl":"redis://cache"
     }
   }
 }
