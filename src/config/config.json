@@ -1,6 +1,6 @@
 {
   "db": {
-    "host": "bookcafe_wookie_books_application_1",
+    "host": "localhost",
     "port": "3306",
     "database": "book_cafe",
     "user": "root",
@@ -12,5 +12,8 @@
     "signature": "dashvdhbjsadashjrghf",
     "jwtexpiration": "12h",
     "bannedUsers":["THANOS"]
+  },
+  "redis":{
+    "redis_url":"redis://127.0.0.1"
   }
 }

@@ -19,6 +19,7 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.use("/auth", authAPIs);
 
 app.use((req, res, next) => {
