@@ -1,8 +1,9 @@
 const mysql = require('mysql');
 const config = require('../config/config.json');
+let env = process.env.NODE_ENV || "dockerEnv";
 var pool;
 try {
-    pool = mysql.createPool(config.db);
+    pool = mysql.createPool(config[env].db);
 }
 catch (err) {
     console.log("Unable to create pool. Kindly check the db params");
@@ -212,13 +213,13 @@ const getBooksById = (bookId) => {
                 reject(err);
             }
 
-            connection.query(mysql.format('SELECT * FROM book where id=?',bookId), (err, result) => {
+            connection.query(mysql.format('SELECT * FROM book where id=?', bookId), (err, result) => {
                 if (err) {
                     reject(err);
                 }
                 else {
                     if (result.length == 0) {
-                        reject("No Book With Id -"+ bookId);
+                        reject("No Book With Id -" + bookId);
                     }
                     resolve(result);
                 }
@@ -238,13 +239,13 @@ const getBooksByTitle = (bookTitle) => {
                 console.log("Unable to get connection");
                 reject(err);
             }
-            connection.query(mysql.format('SELECT * FROM book where title=?',bookTitle), (err, result) => {
+            connection.query(mysql.format('SELECT * FROM book where title=?', bookTitle), (err, result) => {
                 if (err) {
                     reject(err);
                 }
                 else {
                     if (result.length == 0) {
-                        reject("No Book With Title -"+ bookTitle);
+                        reject("No Book With Title -" + bookTitle);
                     }
                     resolve(result);
                 }

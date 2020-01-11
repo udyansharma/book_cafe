@@ -34,9 +34,8 @@ services:
       - 8090:8090
     depends_on:
       - mysql_container
+      - redis
     links:
       - redis
-    environment:
-      - REDIS_URL=redis://cache
     restart: always
     

@@ -3,7 +3,8 @@ const redis = require('redis');
 const inputValidator = require('../../services/validations.js');
 const books = require('../../services/books.js');
 const config = require('../../config/config.json');
-const redisClient = redis.createClient();
+let env = process.env.NODE_ENV || "dockerEnv";
+const redisClient = redis.createClient(config[env].redis.redisUrl);
 
 
 redisClient.on('error', (err) => {
@@ -53,13 +54,20 @@ router.get("/yourHolyProperty", (req, res, next) => {
                 return res.status(500).send("Server Error");
             }
             if (result) {
+                console.log(" GOT REDIS");
                 return res.status(200).json({ userBooks: JSON.parse(result) });
             }
             else {
-                let userBooks = await books.getBooksByUser(loggedInUser);
-                redisClient.set('books' + loggedInUser, JSON.stringify(userBooks));
-                redisClient.expire('books' + loggedInUser, 40);
-                return res.status(200).json({ userBooks });
+                try {
+                    let userBooks = await books.getBooksByUser(loggedInUser);
+                    redisClient.set('books' + loggedInUser, JSON.stringify(userBooks));
+                    redisClient.expire('books' + loggedInUser, 40);
+                    return res.status(200).json({ userBooks });
+                }
+                catch (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
             }
         })
 
@@ -81,12 +89,18 @@ router.get("/getBookList", async (req, res, next) => {
                 return res.status(200).json({ allBooks: JSON.parse(result) });
             }
             else {
-                let allBooks = await books.getAllBooks();
-                if (JSON.stringify(allBooks) === "[]")
-                    return res.status(200).send("No Books Have Been Published So Far");
-                redisClient.set('allBooks', JSON.stringify(allBooks));
-                redisClient.expire('allBooks', 40);
-                return res.status(200).json({ allBooks });
+                try {
+                    let allBooks = await books.getAllBooks();
+                    if (JSON.stringify(allBooks) === "[]")
+                        return res.status(200).send("No Books Have Been Published So Far");
+                    redisClient.set('allBooks', JSON.stringify(allBooks));
+                    redisClient.expire('allBooks', 40);
+                    return res.status(200).json({ allBooks });
+                }
+                catch (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
             }
         })
     } catch (err) {
@@ -97,7 +111,6 @@ router.get("/getBookList", async (req, res, next) => {
 
 router.get("/getBookById", async (req, res, next) => {
     try {
-        console.log("ITS", req.query);
         inputValidator.gettingBooksById(req.query);
         let bookId = JSON.parse(req.query.id);
         redisClient.get('book' + bookId, async (err, result) => {
@@ -106,13 +119,20 @@ router.get("/getBookById", async (req, res, next) => {
                 return res.status(500).send("Server Error");
             }
             if (result) {
+                console.log(" GOT REDIS");
                 return res.status(200).json({ userBooks: JSON.parse(result) });
             }
             else {
-                let userBooks = await books.getBooksById(bookId);
-                redisClient.set('book' + bookId, JSON.stringify(userBooks));
-                redisClient.expire('book' + bookId, 40);
-                return res.status(200).json({ userBooks });
+                try {
+                    let userBooks = await books.getBooksById(bookId);
+                    redisClient.set('book' + bookId, JSON.stringify(userBooks));
+                    redisClient.expire('book' + bookId, 40);
+                    return res.status(200).json({ userBooks });
+                }
+                catch (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
             }
         });
     } catch (err) {
@@ -133,13 +153,19 @@ router.get("/getBookByTitle", async (req, res, next) => {
                 return res.status(500).send("Server Error");
             }
             if (result) {
+                console.log(" GOT REDIS");
                 return res.status(200).json({ bookOfTitle: JSON.parse(result) });
             }
             else {
-                let bookOfTitle = await books.getBooksByTitle(bookTitle);
-                redisClient.set('book' + bookTitle, JSON.stringify(bookOfTitle));
-                redisClient.expire('book' + bookTitle, 40);
-                return res.status(200).json({ bookOfTitle });
+                try {
+                    let bookOfTitle = await books.getBooksByTitle(bookTitle);
+                    redisClient.set('book' + bookTitle, JSON.stringify(bookOfTitle));
+                    redisClient.expire('book' + bookTitle, 40);
+                    return res.status(200).json({ bookOfTitle });
+                } catch (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                }
             }
         })
     } catch (err) {
