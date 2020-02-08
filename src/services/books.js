@@ -1,6 +1,6 @@
 const db = require('./database');
 
-const publishBook = async (author, bookDetails) => {
+const publishBook =  (author, bookDetails) => {
     return new Promise((resolve, reject) => {
         let bookDescription = bookDetails.description;
         let booktitle = bookDetails.title;
@@ -14,7 +14,7 @@ const publishBook = async (author, bookDetails) => {
     });
 }
 
-const unPublishBook = async (author, bookDetails) => {
+const unPublishBook =  (author, bookDetails) => {
     return new Promise((resolve, reject) => {
         let booktitle = bookDetails.title;
         db.unPublishBook(author, booktitle).then((result) => {
@@ -27,7 +27,7 @@ const unPublishBook = async (author, bookDetails) => {
     });
 }
 
-const getBooksByUser = async (user) => {
+const getBooksByUser = (user) => {
     return new Promise((resolve, reject) => {
         db.getBooksByAuthor(user).then((result) => {
             console.log(result);
@@ -39,7 +39,7 @@ const getBooksByUser = async (user) => {
     });
 }
 
-const getAllBooks = async () => {
+const getAllBooks = () => {
     return new Promise((resolve, reject) => {
         db.getAllBooks().then((result) => {
             console.log(result);
@@ -51,7 +51,7 @@ const getAllBooks = async () => {
     });
 }
 
-const getBooksByTitle = async (title) => {
+const getBooksByTitle = (title) => {
     return new Promise((resolve, reject) => {
         db.getBooksByTitle(title).then((result) => {
             console.log(result);
@@ -63,7 +63,7 @@ const getBooksByTitle = async (title) => {
     });
 }
 
-const getBooksById = async (title) => {
+const getBooksById = (title) => {
     return new Promise((resolve, reject) => {
         db.getBooksById(title).then((result) => {
             console.log(result);

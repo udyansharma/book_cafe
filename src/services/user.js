@@ -1,11 +1,11 @@
 
 const db = require('./database');
 const bcrypt = require('bcrypt');
-const signUp = async (input) => {
+const signUp = (input) => {
     return new Promise((resolve, reject) => {
         let userName = input.userName;
         let userPassword = input.password;
-        bcrypt.hash(userPassword, 2, async function (err, hashedPassword) {
+        bcrypt.hash(userPassword, 2, function (err, hashedPassword) {
             if (err) {
                 reject("Unable To Create Your Account Right Now");
             }
@@ -18,7 +18,7 @@ const signUp = async (input) => {
         })
     })
 };
-const signIn = async (input) => {
+const signIn = (input) => {
     return new Promise((resolve, reject) => {
         let userName = input.userName;
         let userPassword = input.password;

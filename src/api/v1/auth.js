@@ -35,12 +35,4 @@ router.post("/signUp", async (req, res, next) => {
     }
 });
 
-router.get("/getBookList", (req, res, next) => {
-
-});
-
-router.get("/getBookById", (req, res, next) => {
-
-});
-
 module.exports = router;

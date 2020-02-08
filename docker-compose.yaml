@@ -35,7 +35,7 @@ services:
     depends_on:
       - mysql_container
       - redis
-    links:
-      - redis
+    # links:
+    #   - redis
     restart: always
     

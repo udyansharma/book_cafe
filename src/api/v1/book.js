@@ -77,7 +77,7 @@ router.get("/yourHolyProperty", (req, res, next) => {
     }
 });
 
-router.get("/getBookList", async (req, res, next) => {
+router.get("/getBookList", (req, res, next) => {
     try {
         redisClient.get('allBooks', async (err, result) => {
             if (err) {
@@ -109,7 +109,7 @@ router.get("/getBookList", async (req, res, next) => {
     }
 });
 
-router.get("/getBookById", async (req, res, next) => {
+router.get("/getBookById", (req, res, next) => {
     try {
         inputValidator.gettingBooksById(req.query);
         let bookId = JSON.parse(req.query.id);
@@ -142,7 +142,7 @@ router.get("/getBookById", async (req, res, next) => {
 
 });
 
-router.get("/getBookByTitle", async (req, res, next) => {
+router.get("/getBookByTitle", (req, res, next) => {
     try {
         console.log("ITS", req.query);
         inputValidator.gettingBooksByTitle(req.query);
